@@ -18,6 +18,7 @@ namespace ReadingTime.Models
         [Display(Name = "User ID")]
         public int Id { get; set; }
 
+        
         [Required]
         [StringLength(50, MinimumLength = 1)]
         [Display(Name = "Username")]
@@ -39,7 +40,7 @@ namespace ReadingTime.Models
         [Display(Name = "I highly recommend it")]
         public Book Book { get; set; }
 
-        public int Type { get; set; }
+        public UserType Type { get; set; } = UserType.Client;
 
 
 

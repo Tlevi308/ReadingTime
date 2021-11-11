@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ReadingTime.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ReadingTime
 {
@@ -24,6 +27,24 @@ namespace ReadingTime
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ReadingTimeContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ReadingTimeContext")));
+            
+            //#1
+            //chemi give this code
+            //Added code for session - enable save data for x minutes you whant 
+            services.AddSession(options => 
+            { 
+                options.IdleTimeout = TimeSpan.FromMinutes(10); 
+            });
+
+            //#2
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options => 
+                { options.LoginPath = "/Users/Login";
+                    options.AccessDeniedPath = "/Users/AccessDenied";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,13 +65,22 @@ namespace ReadingTime
 
             app.UseRouting();
 
+
+            //#1
+            //chemi give this code
+            //Added code for session - enable save data for x minutes you whant 
+            app.UseSession();
+
+            //#2
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=users}/{action=Register}/{id?}");
             });
         }
     }

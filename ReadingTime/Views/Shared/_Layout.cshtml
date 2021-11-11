@@ -22,12 +22,50 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">About me</a>
                         </li>
+
+
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">My List</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="#" asp-action="#"> </a>
+                        </li>
+
+
+
+
+
+                        @if (Context.User != null && Context.User.Claims != null && Context.User.Claims.Count() > 0)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
+                            </li>
+
+                        }
                     </ul>
                 </div>
             </div>
+            <h5>
+               
+            </h5>
+            <a target="_blank" href="https://www.booked.net/weather/tel-aviv-18414">
+                <img src="https://w.bookcdn.com/weather/picture/12_18414_1_1_2071C9_118_2071C9_FFFFFF_FFFFFF_0_2071C9_FFFFFF_0_6.png?scode=2&domid=w209&anc_id=29267" alt="booked.net" />
+                <h4 id="weather_msg" class="weather_title"></h4>
+            </a>
         </nav>
+        
     </header>
     <div class="container">
         <main role="main" class="pb-3">

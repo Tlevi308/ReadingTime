@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReadingTime.Models;
 using System;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace ReadingTime.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,9 +26,17 @@ namespace ReadingTime.Controllers
             return View();
         }
 
+        
         public IActionResult Privacy()
         {
+            //regect access who not conect our server
+            /*if (HttpContext.Session.GetString("username") == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }*/
+
             return View();
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
