@@ -4,17 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>My List</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
-<from asp-action="Search">
-    <input name="query" placeholder="Search book" />
-    <input type="submit" value="Search" class="btn btn-primary"/>
-</from>
-
+<form asp-action="Search">
+    <input name="query" id="query" autocomplete="off" />
+    <input type="submit" />
+</form>
 
 
 <table class="table">
@@ -29,9 +28,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Author)
             </th>
-           
             <th>
                 @Html.DisplayNameFor(model => model.Read)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre.GenreName)
             </th>
             <th></th>
         </tr>
@@ -48,9 +49,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
-            
             <td>
                 @Html.DisplayFor(modelItem => item.Read)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre.GenreName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Title">Edit</a> |
@@ -61,3 +64,7 @@
 }
     </tbody>
 </table>
+
+@section Scripts{
+    <script src="~/js/search.js"></script>
+ }

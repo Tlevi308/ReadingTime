@@ -19,5 +19,7 @@ namespace ReadingTime.Data
         public DbSet<ReadingTime.Models.Book> Book { get; set; }
 
         public DbSet<ReadingTime.Models.MyGoalList> MyGoalList { get; set; }
+
+        public DbSet<ReadingTime.Models.Genre> Genre { get; set; }
     }
 }

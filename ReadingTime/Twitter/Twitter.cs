@@ -10,19 +10,19 @@ using Newtonsoft.Json.Linq;
 using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 
 
-namespace ReadingTimee.Tweeter
+namespace TamirLevi1.Tweeter
 {
     public class Twitter
     {
-        public static string APIkeycon = "9kMUQbxmSojEYZaw5qkRQcnz9";
+        public static string APIkeycon = "ojfXsv68wLKr5NBNGkPjvgPHn";
 
-        public static string APIsecretKeycon = "3inIqDzGcB1t4EGL0OMcwJgaPRG0VOH1GFVMzOmlQKzxNTnip8";
+        public static string APIsecretKeycon = "JmoIQVLTgXH0gfy7a24vLq0uEZRl23RYwY01hFpOsbwt5zoOgx";
 
-        public static string BearerToken = "AAAAAAAAAAAAAAAAAAAAAE%2FHVgEAAAAAEyivjb4UUUWAbHrMFhmpSVfCFVg%3DEr0tSF43KVhrLgVzG5E878cczXRh96k4tlLxm05Oex6an5RjkV";
+        public static string BearerToken = "AAAAAAAAAAAAAAAAAAAAAC3bVgEAAAAAR4GVEbzugSCSQ9guX8k0najRYcg%3DnbZijbBYIq83OmyVW4yE5G5bzctcAh6LuNS67Ni43pCqURKjAU";
 
-        public static string AccessToken = "1434235654045507586-MPDRX7jeqquoWey6MIM8aUsSwYtqg6";
+        public static string AccessToken = "1434235654045507586-4j9zX6o4d8ogenwVpHpU9HyZo9u5xh";
 
-        public static string AccessTokenSecret = "xOlxk9I0nKYhj7ZaYPbqEqi7LSmsCd1vGEl6e3Ke48jpy";
+        public static string AccessTokenSecret = "OmtCTpsqO5MGxTQCsKG53c53FukauQjWjyiAsnEgqGpoc";
         
 
 

@@ -19,7 +19,7 @@ namespace ReadingTime.Models
         public string Description { get; set; }
 
         [StringLength(50, MinimumLength = 1)]
-        [Display(Name = "Author of the book")]
+        [Display(Name = "Author")]
         public string Author { get; set; }
 
         [DataType(DataType.ImageUrl)]
@@ -36,6 +36,12 @@ namespace ReadingTime.Models
         //many2one
         [Display(Name = "Who recommend on me")]
         public List<User> Users { get; set; }
+
+        //===================//
+        [Display(Name = "Genre")]
+        public int? GenreId { get; set; }
+
+        public virtual Genre Genre { get; set; }
 
 
     }

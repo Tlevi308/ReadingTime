@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ReadingTimee;
+using TamirLevi1.Tweeter;
 
-namespace ReadingTimee.Tweeter
+namespace TamirLevi1.Tweeter
 {
     public class TwitterSettings
     {

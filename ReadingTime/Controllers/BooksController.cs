@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ReadingTime.Data;
 using ReadingTime.Models;
-using ReadingTimee.Tweeter;
-using Tweetinvi.Models;
-using Tweetinvi;
+//using ReadingTimee.Tweeter;
+using TamirLevi1.Tweeter;
+//using TamirLevi1.Tweeter;
 
 namespace ReadingTimee.Controllers
 {
@@ -19,24 +19,27 @@ namespace ReadingTimee.Controllers
     {
         private readonly ReadingTimeContext _context;
 
-       
         public BooksController(ReadingTimeContext context)
         {
             _context = context;
         }
 
+        //=========Search=========//
+        public async Task<IActionResult> Search(string query)
+        {
+            var readingTimeContext = _context.Book.Where(a =>a.Title.Contains(query));
+            return View("Index", await readingTimeContext.ToListAsync());
+
+        }
+
+
+
         // GET: Books
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Book.ToListAsync());
+            var readingTimeContext = _context.Book.Include(b => b.Genre);
+            return View(await readingTimeContext.ToListAsync());
         }
-
-        public async Task<IActionResult> Search(string query)
-        {
-            var ReadingTimeContext = _context.Book.Include(a => a.Users).Where(a => a.Title.Contains(query)|| a.Description.Contains(query));
-            return View( await ReadingTimeContext.ToListAsync());
-        }
-
 
         // GET: Books/Details/5
         public async Task<IActionResult> Details(string id)
@@ -47,6 +50,7 @@ namespace ReadingTimee.Controllers
             }
 
             var book = await _context.Book
+                .Include(b => b.Genre)
                 .FirstOrDefaultAsync(m => m.Title == id);
             if (book == null)
             {
@@ -59,6 +63,7 @@ namespace ReadingTimee.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
+            ViewData["GenreId"] = new SelectList(_context.Genre, "GenreId", "GenreName");
             return View();
         }
 
@@ -67,33 +72,26 @@ namespace ReadingTimee.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Description,Author,Image,Read")] Book book)
+        public async Task<IActionResult> Create([Bind("Title,Description,Author,Image,Read,GenreId")] Book book)
         {
-
-            
-
             if (ModelState.IsValid)
             {
-
                 _context.Add(book);
                 await _context.SaveChangesAsync();
 
 
-               Tweeter.Twitter twitter = new Twitter(Twitter.APIkeycon, Twitter.APIsecretKeycon, Twitter.AccessToken,
-                            Twitter.AccessTokenSecret);
-                twitter.TweetText("I will read !!! " + book.Title, string.Empty);
+                //--------tewiter-----------//
+                TamirLevi1.Tweeter.Twitter twitter = new Twitter(Twitter.APIkeycon, Twitter.APIsecretKeycon, Twitter.AccessToken,
+             Twitter.AccessTokenSecret);
+                twitter.TweetText("I will read " + book.Title + " book", string.Empty);
+                //-------------------------//
 
 
 
                 return RedirectToAction(nameof(Index));
             }
-
-
-
+            ViewData["GenreId"] = new SelectList(_context.Genre, "GenreId", "GenreName", book.GenreId);
             return View(book);
-
-
-
         }
 
         // GET: Books/Edit/5
@@ -109,6 +107,7 @@ namespace ReadingTimee.Controllers
             {
                 return NotFound();
             }
+            ViewData["GenreId"] = new SelectList(_context.Genre, "GenreId", "GenreName", book.GenreId);
             return View(book);
         }
 
@@ -117,7 +116,7 @@ namespace ReadingTimee.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Title,Description,Author,Image,Read")] Book book)
+        public async Task<IActionResult> Edit(string id, [Bind("Title,Description,Author,Image,Read,GenreId")] Book book)
         {
             if (id != book.Title)
             {
@@ -144,6 +143,7 @@ namespace ReadingTimee.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["GenreId"] = new SelectList(_context.Genre, "GenreId", "GenreName", book.GenreId);
             return View(book);
         }
 
@@ -156,6 +156,7 @@ namespace ReadingTimee.Controllers
             }
 
             var book = await _context.Book
+                .Include(b => b.Genre)
                 .FirstOrDefaultAsync(m => m.Title == id);
             if (book == null)
             {

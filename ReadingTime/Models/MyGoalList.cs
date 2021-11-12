@@ -25,5 +25,13 @@ namespace ReadingTime.Models
         public List<Book> Books { get; set; }
 
 
+
+        //==================
+       
+
+
+
+
+
     }
 }
